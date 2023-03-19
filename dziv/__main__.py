@@ -13,6 +13,14 @@ cmddef = dict(context_settings = dict(help_option_names=['-h', '--help']))
 def cli(ctx):
     ctx.obj = dict()
 
+@cli.command("serve")
+@click.argument('source', nargs=-1)
+def serve(source):
+    print(source)
+    import dziv.server
+    dziv.server.source = source
+    dziv.server.app.run(host="0.0.0.0", port=5100)
+
 @cli.command("tile")
 @click.option("-S","--size", default=254, help="Tile size")
 @click.option("-O","--overlap", default=1, help="Tile overlap")

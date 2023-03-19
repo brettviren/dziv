@@ -14,10 +14,11 @@ setuptools.setup(
         "pytest",
         "scipy",
         "pillow",
+        "flask",
     ],
-    entry_points = dict(
-        console_scripts = [
+    entry_points = {
+        'console_scripts': [
             'dziv = dziv.__main__:main',
-        ]
+        ],
     ),
 )
