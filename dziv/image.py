@@ -34,9 +34,6 @@ class Data(object):
     '''
     Adapt PIL image to dzi data model.
     '''
-
-
-
     def __init__(self, image, interpolation = "bicubic"):
         if not isinstance(image, Image.Image):
             image = Image.open(image)
@@ -51,18 +48,19 @@ class Data(object):
         '''
         sz = (shape[1],shape[0])
         filt = getattr(Image, self._interpolation.upper())
-        return Data(self._image.resize(sz, filt), self._interpolation)
+        print(f'zoom {self.shape} to {shape} size={self._image.size}')
+        newimg = self._image.resize(sz, filt)
+        return Data(newimg, self._interpolation)
 
     def crop(self, slices):
         '''
         Return a new Data in slices 
         '''
         sr, sc = slices
-
-        # im.crop((left, upper, right, lower))
-        return Data(self._image.crop((sc.start, sr.start,
-                                      sc.stop,  sr.stop)),
-                    self._interpolation)
+        box = (sc.start, sr.start, sc.stop,  sr.stop)
+        print(f'crop shape:{self.shape} size:{self._image.size} to box:{box}')
+        newimg = self._image.crop(box)
+        return Data(newimg, self._interpolation)
 
     def save(self, tgt, fmt=None):
         '''

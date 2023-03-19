@@ -31,15 +31,18 @@ class Tiler(object):
         self._pyramid = pyramid
         self._pyramid.shape = data.shape
         self._data = data
-        
+
     @cache
     def zoom(self, level):
         '''
         Return a new data zoomed to this level
         '''
         lshape = self._pyramid.level_shape(level)
-        return self._data.zoom(lshape)
+        print(f'ZOOM level={level} shape={lshape}')
+        newdat = self._data.zoom(lshape)
+        return newdat
 
+    @cache
     def crop(self, level, loc):
         '''
         Return crop of data at given level and tile loc=(row,col)
