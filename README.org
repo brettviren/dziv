@@ -1,0 +1,32 @@
+#+title: deep zoom image views
+
+The ~dziv~ package provides a command line program and Python module of
+that name which assists in producing a deep zoom image "pyramid" of
+tiles and in serving and viewing those with OpenSeadragon.
+
+* Usage
+
+~dziv~ is Free Software.  You may use it under the terms of the GNU Affero General Public License (AGPL).
+
+** Basic Tiling
+
+#+begin_example
+dziv tile -o big-image.dzi big-image.jpg
+tree big-image
+#+end_example
+
+** File serving
+
+#+begin_example
+dziv osdweb -t ~user/public_html/dziv big-image.jpg
+dziv osdweb -t ~user/public_html/dziv big-image2.jpg
+firefox http://localhost/~user/dziv/
+#+end_example
+
+** Fileless serving
+
+#+begin_example
+dziv osdweb big-image.jpg big-image2.jpg
+firefox http://localhost:5100/
+#+end_example
+
