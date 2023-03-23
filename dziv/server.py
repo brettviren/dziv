@@ -28,6 +28,11 @@ from .dzi import Pyramid
 from .image import Data as Image
 from .web import osd_header
 
+# fixme: this will only work for in-source running!
+# fixme: need to install osd/ files!
+osd_dir = Path(__file__).parent.parent / "osd"
+print("OSD_DIR:", osd_dir)
+
 def create(source):
     if isinstance(source, str):
         source=[source]
@@ -79,9 +84,8 @@ def create(source):
     @app.route('/osd/<path:path>')
     def send_osd(path):
         # osd = Path("/home/bv/dev/openseadragon/src")
-        osd = Path("osd")
-        print(f'serve OSD file: {path} from {osd.absolute()}')
-        got = send_from_directory(osd.absolute(), path)
+        print(f'serve OSD file: {path} from {osd_dir.absolute()}')
+        got = send_from_directory(osd_dir.absolute(), path)
         print("SUCCESS", type(got))
         return got
 
@@ -89,9 +93,8 @@ def create(source):
     @app.route('/src/<path:path>')
     def send_src(path):
         # osd = Path("/home/bv/dev/openseadragon/src")
-        osd = Path("osd")
-        print(f'serve OSD file: {path} from {osd.absolute()}')
-        got = send_from_directory(osd.absolute(), path)
+        print(f'serve OSD file: {path} from {osd_dir.absolute()}')
+        got = send_from_directory(osd_dir.absolute(), path)
         return got
 
 

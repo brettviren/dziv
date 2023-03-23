@@ -96,6 +96,7 @@ def osdweb(size, overlap, format, target, url, filename):
     header = osd_header(f'{dziname}.dzi', osd, inpath.stem)
     with open(target / f'{inpath.stem}.html', "w") as html:
         html.write(f'<html>\n{header}\n</html>\n')
+
     shutil.copytree("osd/images", target / osd / "images")
     osdjs = Path("osd/openseadragon.min.js")
     shutil.copy(osdjs, target / osdjs )
