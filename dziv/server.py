@@ -39,7 +39,10 @@ def create(source):
         path = Path(one)
         if not path.exists():
             raise ValueError(f'no such file or directory: {one}')
-        if path.suffix in ('.jpg','.jpeg'):
+        
+        ## for a numpy array, this makes a good false color image. 
+        # matplotlib.image.imsave('arr.png', arr, cmap='gist_ncar')
+        if path.suffix in ('.jpg','.jpeg','.png'):
             sources.append(path)
             d = Image(path)            
             p = Pyramid(d.shape)
@@ -116,7 +119,10 @@ def create(source):
     OpenSeadragon({{
         id: "openseadragon{number}",
         prefixUrl: "{osd_images_url}",
-        tileSources: "{image_dzi}"
+        tileSources: "{image_dzi}",
+        minZoomImageRatio: 0.8,
+        maxZoomPixelRatio: 8,
+        imageSmoothingEnabled: false,
     }});
 </script>
 </body>
