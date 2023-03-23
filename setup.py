@@ -20,5 +20,5 @@ setuptools.setup(
         'console_scripts': [
             'dziv = dziv.__main__:main',
         ],
-    ),
+    },
 )

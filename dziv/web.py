@@ -30,7 +30,10 @@ def osd_header(dzi_url, osd_url="", divid="osd1"):
     var viewer = OpenSeadragon({{
         id: "{divid}",
         prefixUrl: "{osd_url}/images/",
-        tileSources: "{dzi_url}"
+        tileSources: "{dzi_url}",
+        minZoomImageRatio: 0.8,
+        maxZoomPixelRatio: 8,
+        imageSmoothingEnabled: false,
     }});
 </script>'''
 
