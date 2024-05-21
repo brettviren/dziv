@@ -19,6 +19,8 @@
 
 from pathlib import Path
 from PIL import Image
+import numpy
+from matplotlib import cm
 
 # pil is kind of annoying
 def pil_fmt(fmt):
@@ -30,15 +32,36 @@ def pil_fmt(fmt):
 # we are, after all, here to deal with large images.
 Image.MAX_IMAGE_PIXELS = 14400 * 14400
 
+def load(image):
+    '''
+    Return an Image from file name or path.
+    '''
+    if isinstance(image, Image.Image):
+        return image
+    if isinstance(image, str):
+        image = Path(image)
+    if image.name.endswith(".npy"):
+        arr = numpy.load(image)
+        print(arr.shape)
+        eps=10
+        arr[arr<eps] = eps
+        arr=numpy.log10(arr/eps)
+        vmin = numpy.min(arr)
+        vmax = numpy.max(arr)
+        arr = (arr-vmin) / (vmax-vmin)
+        arr[arr < 0.0] = 0.0
+        arr[arr > 1.0] = 1.0
+        return Image.fromarray(numpy.uint8(cm.plasma(arr)*255))
+        # return Image.fromarray(arr.astype('uint8'))
+    return Image.open(image)
+
 class Data(object):
     '''
     Adapt PIL image to dzi data model.
     '''
     def __init__(self, image, interpolation = "bicubic"):
-        if not isinstance(image, Image.Image):
-            image = Image.open(image)
-        self._image = image
-        s = image.size
+        self._image = load(image)
+        s = self._image.size
         self.shape = (s[1], s[0])
         self._interpolation = interpolation
 
